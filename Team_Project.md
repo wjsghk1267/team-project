@@ -1,6 +1,6 @@
 # TEAM PROJECT Review
 ## No.1
-1) KBO League
+### KBO League
 1. 팀별 성적 데이터
  - 시즌별 팀 순위
  - 승, 패, 무 기록
@@ -30,7 +30,7 @@
 
 
 ## No.2
-2) e-Commerce
+### e-Commerce
 1. 카테고리 (시장 파이조사)
  - 식품
  - 생활용품
