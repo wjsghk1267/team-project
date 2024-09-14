@@ -44,7 +44,7 @@
 
 
 ## 4. 시스템 아키텍처
-![시스템 아키텍처](https://prod-files-secure.s3.us-west-2.amazonaws.com/1352b1ae-a6bb-4248-a0fd-73c3c63ea9d0/b6f481b8-c908-4f8f-9499-74d58a005d27/%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.jpg)
+![시스템 아키텍처]([https://prod-files-secure.s3.us-west-2.amazonaws.com/1352b1ae-a6bb-4248-a0fd-73c3c63ea9d0/b6f481b8-c908-4f8f-9499-74d58a005d27/%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.jpg](https://drive.google.com/file/d/1tee3vn8iP_Q8F_Lzc-DYez6p7XJGs82g/view?usp=drive_link))
 
 ---
 
