@@ -1,8 +1,21 @@
 ![Background Image](https://github.com/wjsghk1267/team-project/blob/main/wallpaper/background.jpg?raw=true)
 # 에코(echo): 반려동물의 마음♥️을 들여다 보는 챗봇
+#### ✅️ 에코 : 동물의 반응과 행동이 반향(Echo) 된다는 의미
 
-**에코(echo)**는 반려동물의 영상을 분석하여 감정과 이상행동, 통증여부를 알려주고, 사용자의 채팅을 통해 반려동물의 문제행동을 분석하여 솔루션을 제공해주는 AI 입니다. 사용자는 에코를 통해 반려동물의 감정과 행동을 더욱 잘 이해할 수 있으며, 반려동물의 통증을 사전에 캐치하여 조기에 치료할 수 있습니다.
+**에코(echo)** 는 반려동물의 영상을 분석하여 감정과 이상행동, 통증여부를 알려주고, 사용자의 채팅을 통해 반려동물의 문제행동을 분석하여 솔루션을 제공해주는 AI 입니다.
+🐈사용자는 에코를 통해 반려동물의 감정과 행동을 더욱 잘 이해할 수 있으며, 반려동물의 통증을 사전에 캐치하여 조기에 치료할 수 있습니다.
 반려동물과 보호자들의 삶의 질과 행복을 지켜주는 서비스를 제공하는 것이 목표입니다.
+
+---
+
+#### 🤝 팀_협업공간
+<a href="https://www.notion.so/61b470132a704b3a9e23aa0eeb2112e4">
+  <img src="https://github.com/wjsghk1267/team-project/blob/main/wallpaper/notion.jpg?raw=true" alt="작업공간" width="100" />
+</a>
+<a href="https://drive.google.com/drive/u/0/folders/1vtIWqlB_JkqC8oO3p1zLxkbMaZa5w_H4">
+  <img src="https://github.com/wjsghk1267/team-project/blob/main/wallpaper/google.png?raw=true" alt="작업공간" width="100" />
+</a>
+
 
 ---
 
