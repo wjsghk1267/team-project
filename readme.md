@@ -1,3 +1,4 @@
+!(wallpaper/background.jpg)
 # 에코(echo): 반려동물의 마음을 들여다 보는 챗봇
 
 **에코(echo)**는 반려동물의 영상을 분석하여 감정과 이상행동, 통증여부를 알려주고, 사용자의 채팅을 통해 반려동물의 문제행동을 분석하여 솔루션을 제공해주는 AI 입니다. 사용자는 에코를 통해 반려동물의 감정과 행동을 더욱 잘 이해할 수 있으며, 반려동물의 통증을 사전에 캐치하여 조기에 치료할 수 있습니다.
@@ -44,7 +45,7 @@
 
 
 ## 4. 시스템 아키텍처
-![시스템 아키텍처]([https://prod-files-secure.s3.us-west-2.amazonaws.com/1352b1ae-a6bb-4248-a0fd-73c3c63ea9d0/b6f481b8-c908-4f8f-9499-74d58a005d27/%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.jpg](https://drive.google.com/file/d/1tee3vn8iP_Q8F_Lzc-DYez6p7XJGs82g/view?usp=drive_link))
+![시스템 아키텍처](wallpaper/system Architecture.jpg)
 
 ---
 
