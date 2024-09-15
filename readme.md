@@ -1,5 +1,5 @@
-![Background Image](https://github.com/wjsghk1267/team-project/blob/main/wallpaper/background.jpg?raw=true)
 # 에코(echo): 반려동물의 마음♥️을 들여다 보는 챗봇
+![Background Image](https://github.com/wjsghk1267/team-project/blob/main/wallpaper/background.jpg?raw=true)
 #### ✅️ 에코 : 동물의 반응과 행동이 반향(Echo) 된다는 의미
 
 **에코(echo)** 는 반려동물의 영상을 분석하여 감정과 이상행동, 통증여부를 알려주고, 사용자의 채팅을 통해 반려동물의 문제행동을 분석하여 솔루션을 제공해주는 AI 입니다.
