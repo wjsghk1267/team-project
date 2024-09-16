@@ -10,3 +10,13 @@ use **Google Text-to-Speech**
 4. 속도 (speaking_rate): 기본값은 1.0 (0.25 ~ 4.0 사이에서 조정 가능)
 5. 음높이 (pitch): 기본값은 0.0 (-20.0 ~ 20.0 사이에서 조정 가능)
 6. 음량 (volume_gain_db): 기본값은 0.0 (-96.0 ~ 16.0 dB 사이에서 조정 가능)
+
+---
+
+🔊 **Voice Test**
+
+1. **Default Voice**
+   [재생](https://drive.google.com/file/d/1VZptYPXHTvCC8rj_usNowSN7L7by0_zp/view?usp=drive_link)
+
+2. **JSON Voice**
+   [재생](https://drive.google.com/file/d/1fsv-TPylJtA4O-9fyx1d2rntr7OBNTwX/view?usp=drive_link)
