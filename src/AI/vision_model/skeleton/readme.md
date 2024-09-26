@@ -1,4 +1,17 @@
 ## YOLO Data - Skeleton 추가
+<table>
+  <tr>
+    <td>
+      <img src="./output_20201028_cat-arch-000156.mp4_frame_0_timestamp_0.jpg" alt="Cat Image 1" width="600"/>
+    </td>
+    <td>
+      <img src="./output_20201028_cat-arch-000156.mp4_frame_12_timestamp_800.jpg" alt="Cat Image 2" width="600"/>
+    </td>
+    <td>
+      <img src="./output_20201028_cat-arch-000156.mp4_frame_15_timestamp_1000.jpg" alt="Cat Image 3" width="600"/>
+    </td>
+  </tr>
+</table>
 
 #### Keypoints:
 - 0: Nose
