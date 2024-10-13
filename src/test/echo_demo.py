@@ -30,20 +30,19 @@ import io
 from openai import OpenAI
 
 model = "gpt-4o-mini-2024-07-18"
-
 os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-
+MONGODB_URI = "mongodb+srv://ihyuns96:qwer1234@cluster0.xakad.mongodb.net/?retryWrites=true&w=majority"
 db_client = MongoClient(MONGODB_URI)
 db = db_client['dbsparta']
 collection = db['dog']
 
 # 한글 폰트 설정
-# font_path = "E:/1006/malgun.ttf"
-# font_prop = fm.FontProperties(fname=font_path, size=12)
-# plt.rc('font', family=font_prop.get_name())
-# plt.rcParams['axes.unicode_minus'] = False 
+font_path = "G:/workspace/1006/malgun.ttf"
+font_prop = fm.FontProperties(fname=font_path, size=12)
+plt.rc('font', family=font_prop.get_name())
+plt.rcParams['axes.unicode_minus'] = False 
 
 breed_mapping = {
     "Chihuahua": "치와와",
@@ -167,7 +166,40 @@ breed_mapping = {
     "Dhole": "도울",
     "African_hunting_dog": "아프리칸 헌팅 독"
 }
+comprehensive_analysis_template = ChatPromptTemplate.from_messages([
+    ("system", """
+    당신은 20년 경력의 수의사이자 강아지 행동 분석 전문가입니다. 주어진 모든 정보를 종합하여 강아지의 상태를 분석하고 전문적인 조언을 제공해야 합니다.
 
+    ** 입력 정보 **
+    1. YOLO 분석 결과: {yolo_text}
+    2. LSTM 분석 결과: {lstm_text}
+    3. LLM 비디오 분석 결과: {summary_text}
+    4. RAG 문서 정보: {rag_text}
+
+    ** 유저와의 상호작용 **
+    모든 대화는 한국어로 진행됩니다.
+
+    ** 분석 및 답변 지침 **
+    1. 모든 입력 정보를 종합하여 강아지의 상태, 행동, 감정, 건강 상태를 정확히 파악하세요.
+    2. YOLO 결과로부터 강아지의 품종과 외형적 특징을 고려하세요.
+    3. LSTM 결과를 바탕으로 강아지의 행동 패턴과 감정 상태, 통증여부, 이상행동 여부를 분석하세요.
+    4. LLM 비디오 분석 결과를 통해 전반적인 상황 맥락을 이해하세요.
+    5. RAG 문서 정보를 활용하여 관련된 전문 지식을 답변에 통합하세요.
+    6. 문제가 있다면 그 원인을 간단히 설명하고, 구체적이고 실행 가능한 해결책을 제시하세요.
+    7. 보호자가 즉시 실천할 수 있는 실용적인 조언을 포함하세요.
+    8. 필요한 경우 전문가 상담이나 병원 방문을 권유하세요.
+    9. 답변은 전문적이면서도 이해하기 쉽게 작성하세요.
+    
+    ** 답변 구조 **
+    1. 종합적 상황 요약 (YOLO, LSTM, LLM 결과 통합)
+    2. 원인 분석 (해당되는 경우)
+    3. 맞춤형 해결책 또는 권장 행동 (RAG 정보 활용)
+    4. 추가 조언 또는 주의사항 (필요한 경우)
+    5. 결론 및 격려의 말
+
+    주어진 모든 정보를 종합하여 전문적이고 실용적인 분석과 조언을 제공해주세요.
+    """)
+])
 def process_yolo_results(results):
     lstm_keypoint_sequence = []
     skeleton_sequence = []
@@ -227,6 +259,10 @@ def create_skeleton(keypoints):
 
 # YOLO 결과 처리 및 LSTM 입력 준비
 def process_video(video_path, lstm_text, yolo_text):
+    print(f"비디오 파일 경로: {video_path}")
+    print(f"비디오 파일 존재 여부: {os.path.exists(video_path)}")
+    print(f"OpenCV 버전: {cv2.__version__}")
+
     if not os.path.exists(video_path):
         print(f"오류: 비디오 파일을 찾을 수 없습니다: {video_path}")
         return None
@@ -241,41 +277,50 @@ def process_video(video_path, lstm_text, yolo_text):
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    output_path = 'output_video_with_labels.mp4'
+    # 출력 파일 경로 설정
+    output_dir = os.path.dirname(video_path)
+    if not output_dir:  # 디렉토리가 비어있으면 현재 작업 디렉토리 사용
+        output_dir = os.getcwd()
+    output_filename = f"output_{os.path.basename(video_path)}"
+    output_path = os.path.join(output_dir, output_filename)
+    
+    print(f"출력 파일 경로: {output_path}")
+
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+    if not out.isOpened():
+        print("비디오 작성기를 열 수 없습니다.")
+        return None
 
-    # 한글 폰트 설정
     font_size = 20
     font = ImageFont.truetype(font_path, font_size)
 
+    frame_count = 0
     try:
         for _ in tqdm(range(total_frames), desc="비디오 처리 중"):
             ret, frame = cap.read()
             if not ret:
-                print("프레임을 읽는 데 실패했습니다.")
+                print(f"프레임 {frame_count}를 읽는 데 실패했습니다.")
                 break
+            frame_count += 1
 
-            # OpenCV 이미지를 Pillow 이미지로 변환
             pil_image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             draw = ImageDraw.Draw(pil_image)
 
-            # YOLO 텍스트 추가
             y = 30
             for line in yolo_text.split(', '):
-                draw.text((10, y), line, font=font, fill=(0, 255, 0))  # 초록색
+                draw.text((10, y), line, font=font, fill=(0, 255, 0))
                 y += 30
 
-            # LSTM 텍스트 추가
-            y += 30  # YOLO 텍스트와 LSTM 텍스트 사이 간격
-            for line in lstm_text.split(', '):
-                draw.text((10, y), line, font=font, fill=(255, 0, 0))  # 파란색
+            y += 30
+            for line in lstm_text.split('\n'):
+                draw.text((10, y), line, font=font, fill=(255, 0, 0))
                 y += 30
 
             frame = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
-
             out.write(frame)
 
+        print(f"총 처리된 프레임: {frame_count}")
     except Exception as e:
         print(f"비디오 처리 중 오류 발생: {str(e)}")
     finally:
@@ -290,7 +335,6 @@ def process_video(video_path, lstm_text, yolo_text):
         print("오류: 출력 비디오 파일이 생성되지 않았습니다.")
         return None
     
-
 # LLM 분석 템플릿
 llm_analysis_template = """
     ** 역할 **
@@ -486,19 +530,20 @@ def get_ret():
 
     return retriever_json
 
+def generate_comprehensive_analysis(yolo_text, lstm_text, summary_text, rag_text, conversation_history):
+    messages = [
+        {"role": "system", "content": comprehensive_analysis_template.format(
+            yolo_text=yolo_text,
+            lstm_text=lstm_text,
+            summary_text=summary_text,
+            rag_text=rag_text
+        )}
+    ]
+    messages.extend(conversation_history)
 
-def generate_comprehensive_analysis(yolo_text, lstm_text, llm_text, context):
     response = client.chat.completions.create(
-        model="gpt-4o-mini-2024-07-18", 
-        messages=[
-            {"role": "system", "content": comprehensive_analysis_template.format(
-                yolo_text=yolo_text,
-                lstm_text=lstm_text,
-                llm_text=llm_text,
-                context=context
-            )},
-            {"role": "user", "content": "강아지의 상태를 분석하고 조언해주세요."}
-        ],
+        model="gpt-4o-mini-2024-07-18",
+        messages=messages,
         max_tokens=1000
     )
     return response.choices[0].message.content
@@ -632,6 +677,13 @@ def main():
         print("\nLSTM Text:")
         print(lstm_text)
 
+    # 비디오 저장
+    output_video_path = process_video(video_path, lstm_text, yolo_text)
+    if output_video_path:
+        print(f"레이블이 추가된 비디오가 {output_video_path}에 저장되었습니다.")
+    else:
+        print("비디오 처리 중 오류가 발생했습니다.")
+    
     # LLM 분석
     base64Frames, audio_path = analyze_video(video_path)
     summary_text = summarize_video(base64Frames, audio_path)
@@ -656,28 +708,28 @@ def main():
     except Exception as e:
         print(f"검색 중 오류가 발생했습니다: {str(e)}")
 
+    conversation_history = []
 
-    # 상호 작용
     while True:
         user_question = input("답변에 만족하셨나요? 추가로 궁금하신 점이 있으시면 답변해드릴게요 (종료:exit) : ")
         if user_question.lower() == 'exit':
             break
         
-        # 분석 결과와 질문을 바탕으로 답변 생성
+        conversation_history.append({"role": "user", "content": user_question})
+
         follow_up_answer = generate_comprehensive_analysis(
             yolo_text=yolo_text,
             lstm_text=lstm_text,
             summary_text=summary_text,
-            rag_text=rag_text,
-            question=user_question,
-            chat_history=[]  # 초기 분석 결과 포함
+            rag_text=rag_text
         )
+        conversation_history.append({"role": "assistant", "content": follow_up_answer})
         print("response:\n", follow_up_answer)
 
 # 비동기 실행
 if __name__ == "__main__":
-    yolo_model = YOLO("E:/1006/model/yolo_model.pt")
+    yolo_model = YOLO("G:/workspace/1006/model/yolo_model.pt")
     conf_thresh = 0.7
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    checkpoint = torch.load('E:/1006/model/lstm_model.pt', map_location=device)
+    checkpoint = torch.load('G:/workspace/1006/model/lstm_model.pt', map_location=device)
     main()
