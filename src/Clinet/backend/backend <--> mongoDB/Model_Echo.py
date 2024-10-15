@@ -33,7 +33,7 @@ from openai import OpenAI
 
 
 model = "gpt-4o-mini-2024-07-18"
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = '키 필요'
 os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 client = OpenAI(api_key=OPENAI_API_KEY)
 
